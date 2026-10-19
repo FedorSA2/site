@@ -14,7 +14,7 @@ const SITE_DATA = {
   about: {
     title: "О нас",
     text: "«ЭлектронТех» — команда инженеров, которая с 2012 года помогает выбирать технику без переплат. Работаем напрямую с производителями и даём честные консультации.",
-    image: "https://picsum.photos/seed/electronics/800/600"
+    image: "https://media.istockphoto.com/id/1346125184/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D0%B0-%D1%83%D1%81%D0%BF%D0%B5%D1%88%D0%BD%D0%BE%D0%B9-%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D0%BD%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9-%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81-%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B.jpg?s=612x612&w=0&k=20&c=Hb8WgQU3bbJvKbiPueZBQNijO4CUQHnN9lO4GCBm0B8="
   },
   advantages: [
     { icon: "🚚", title: "Быстрая доставка", text: "Отправляем заказы в день оформления." },
