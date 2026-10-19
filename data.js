@@ -23,12 +23,12 @@ const SITE_DATA = {
     { icon: "🔧", title: "Свой сервис", text: "Ремонт в собственном сервис-центре." }
   ],
   products: [
-    { name: "Смартфон Galaxy X Pro", price: "59 990 ₽", image: "https://picsum.photos/seed/phone/400/300", description: "6.7\" AMOLED, 256 ГБ, камера 108 Мп." },
-    { name: "Ноутбук UltraBook 14", price: "84 500 ₽", image: "https://picsum.photos/seed/laptop/400/300", description: "Intel Core i7, 16 ГБ RAM, SSD 1 ТБ." },
-    { name: "Наушники AirPods Max", price: "32 990 ₽", image: "https://picsum.photos/seed/audio/400/300", description: "Шумоподавление, 30 часов работы." },
-    { name: "Часы Watch Series 9", price: "27 400 ₽", image: "https://picsum.photos/seed/watch/400/300", description: "AMOLED, ЭКГ, защита 5 ATM." },
-    { name: "Планшет Tab S9 11\"", price: "45 700 ₽", image: "https://picsum.photos/seed/tablet/400/300", description: "2.5K 120 Гц, стилус в комплекте." },
-    { name: "Колонка Boom 3", price: "9 890 ₽", image: "https://picsum.photos/seed/speaker/400/300", description: "40 Вт, IPX7, 24 часа работы." }
+    { name: "Смартфон Galaxy X Pro", price: "59 990 ₽", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZoS7kaUYPqGPysLwNzeIUQN-6jEdkhxVTWPI2bXOXTA&s=10", description: "6.7\" AMOLED, 256 ГБ, камера 108 Мп." },
+    { name: "Ноутбук UltraBook 14", price: "84 500 ₽", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMPgE3rCwEkJVlDdo4wgNxV-2jv0BEb-DXUfLowJ-ZA&s=10", description: "Intel Core i7, 16 ГБ RAM, SSD 1 ТБ." },
+    { name: "Наушники AirPods Max", price: "32 990 ₽", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy-sIcIynU5cPmvmny8QUuM6MdidpzpObT9A2XZXe16A&s=10", description: "Шумоподавление, 30 часов работы." },
+    { name: "Часы Watch Series 9", price: "27 400 ₽", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxkmbvrQ5NUa_wd1LS4MjEek6t94YIexEO8zIGJRlYSg&s=10", description: "AMOLED, ЭКГ, защита 5 ATM." },
+    { name: "Планшет Tab S9 11\"", price: "45 700 ₽", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8qE-2TpikytuVuR-taF5sEmD1xx96W8UJEnZEi8fDfA&s=10", description: "2.5K 120 Гц, стилус в комплекте." },
+    { name: "Колонка Boom 3", price: "9 890 ₽", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3w5c_Qg00zyLUiDCxWnQePEVgH9CS0hbG2amJIVMU1g&s=10", description: "40 Вт, IPX7, 24 часа работы." }
   ],
   footer: {
     address: "г. Москва, ул. Электронная, д. 15, офис 302",
