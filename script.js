@@ -1,52 +1,77 @@
-const data = window.SITE_DATA || {};
+// ============ ДАННЫЕ ============
+function getData() {
+  const saved = localStorage.getItem('siteData');
+  return saved ? JSON.parse(saved) : SITE_DATA;
+}
+
+// ============ "БАЗА ДАННЫХ" ЗАКАЗОВ (localStorage) ============
+const OrdersDB = {
+  getAll() {
+    return JSON.parse(localStorage.getItem('orders') || '[]');
+  },
+  add(order) {
+    const orders = this.getAll();
+    order.id = Date.now();
+    order.date = new Date().toLocaleString('ru-RU');
+    orders.push(order);
+    localStorage.setItem('orders', JSON.stringify(orders));
+    return order;
+  }
+};
+
+const data = getData();
 let currentProduct = null;
 
-// ============ ОТРИСОВКА ============
+// ============ ОТРИСОВКА САЙТА ============
 function render() {
-  document.getElementById('logoIcon').textContent = data.site?.logo || '⚡';
-  document.getElementById('siteTitle').textContent = data.site?.title || '';
+  document.title = data.site.title;
+  document.getElementById('logoIcon').textContent = data.site.logo;
+  document.getElementById('siteTitle').textContent = data.site.title;
 
-  document.getElementById('heroTitle').textContent = data.hero?.title || '';
-  document.getElementById('heroSubtitle').textContent = data.hero?.subtitle || '';
-  document.getElementById('heroBtn').textContent = data.hero?.buttonText || '';
+  document.getElementById('heroTitle').textContent = data.hero.title;
+  document.getElementById('heroSubtitle').textContent = data.hero.subtitle;
+  document.getElementById('heroBtn').textContent = data.hero.buttonText;
 
-  document.getElementById('aboutTitle').textContent = data.about?.title || '';
-  document.getElementById('aboutText').textContent = data.about?.text || '';
-  document.getElementById('aboutImage').src = data.about?.image || '';
+  document.getElementById('aboutTitle').textContent = data.about.title;
+  document.getElementById('aboutText').textContent = data.about.text;
+  document.getElementById('aboutImage').src = data.about.image;
 
+  // Преимущества
   const adv = document.getElementById('advantagesGrid');
   adv.innerHTML = '';
-  (data.advantages || []).forEach(a => {
+  data.advantages.forEach(a => {
     adv.innerHTML += `
       <div class="adv-card">
         <div class="icon">${a.icon}</div>
-        <h3>${esc(a.title)}</h3>
-        <p>${esc(a.text)}</p>
+        <h3>${a.title}</h3>
+        <p>${a.text}</p>
       </div>`;
   });
 
+  // Товары с кнопкой "Купить"
   const prod = document.getElementById('productsGrid');
   prod.innerHTML = '';
-  (data.products || []).forEach((p, i) => {
+  data.products.forEach((p, i) => {
     prod.innerHTML += `
       <div class="product-card">
-        <img src="${p.image}" alt="${esc(p.name)}" />
+        <img src="${p.image}" alt="${p.name}" />
         <div class="product-body">
-          <h3>${esc(p.name)}</h3>
-          <p class="desc">${esc(p.description)}</p>
+          <h3>${p.name}</h3>
+          <p class="desc">${p.description}</p>
           <div class="price-row">
-            <div class="price">${esc(p.price)}</div>
+            <div class="price">${p.price}</div>
             <button class="buy-btn" onclick="openOrderModal(${i})">🛒 Купить</button>
           </div>
         </div>
       </div>`;
   });
 
-  document.getElementById('footerLogo').textContent = `${data.site?.logo || ''} ${data.site?.title || ''}`;
-  document.getElementById('footerAddress').textContent = data.footer?.address || '';
-  document.getElementById('footerPhone').textContent = '📞 ' + (data.footer?.phone || '');
-  document.getElementById('footerEmail').textContent = '✉️ ' + (data.footer?.email || '');
-  document.getElementById('footerCopyright').textContent = data.footer?.copyright || '';
+  // Подвал
+  document.getElementById('footerLogo').textContent = `${data.site.logo} ${data.site.title}`;
+  document.getElementById('footerAddress').textContent = data.footer.address;
+  document.getElementById('footerPhone').textContent = '📞 ' + data.footer.phone;
+  document.getElementById('footerEmail').textContent = '✉️ ' + data.footer.email;
+  document.getElementById('footerCopyright').textContent = data.footer.copyright;
 }
 
 // ============ ОФОРМЛЕНИЕ ЗАКАЗА ============
@@ -60,8 +85,8 @@ window.openOrderModal = function (index) {
   orderProduct.innerHTML = `
     <img src="${currentProduct.image}" alt="" />
     <div>
-      <strong>${esc(currentProduct.name)}</strong>
-      <p class="price">${esc(currentProduct.price)}</p>
+      <strong>${currentProduct.name}</strong>
+      <p class="price">${currentProduct.price}</p>
     </div>`;
   orderForm.reset();
   orderForm.quantity.value = 1;
@@ -74,41 +99,32 @@ document.getElementById('orderCancel').onclick = () => {
   currentProduct = null;
 };
 
-orderForm.onsubmit = async (e) => {
+orderForm.onsubmit = (e) => {
   e.preventDefault();
   if (!currentProduct) return;
 
-  const fd = new FormData(orderForm);
-  fd.append('action', 'new_order');
-  fd.append('product', currentProduct.name);
-  fd.append('price', currentProduct.price);
+  const formData = new FormData(orderForm);
+  const order = {
+    product: currentProduct.name,
+    price: currentProduct.price,
+    quantity: formData.get('quantity'),
+    name: formData.get('name').trim(),
+    phone: formData.get('phone').trim(),
+    email: formData.get('email').trim(),
+    address: formData.get('address').trim(),
+    comment: formData.get('comment').trim()
+  };
 
-  orderStatus.style.color = '#0ea5e9';
-  orderStatus.textContent = '⏳ Отправка...';
+  OrdersDB.add(order);
 
-  try {
-    const res = await fetch('api.php', { method: 'POST', body: fd });
-    const json = await res.json();
-    if (json.success) {
-      orderStatus.style.color = '#10b981';
-      orderStatus.textContent = '✅ Заказ оформлен! Мы свяжемся с вами.';
-      orderForm.reset();
-      setTimeout(() => {
-        orderModal.classList.add('hidden');
-        currentProduct = null;
-      }, 2000);
-    } else {
-      orderStatus.style.color = '#dc2626';
-      orderStatus.textContent = '❌ ' + (json.error || 'Ошибка');
-    }
-  } catch (err) {
-    orderStatus.style.color = '#dc2626';
-    orderStatus.textContent = '❌ Ошибка сети';
-  }
+  orderStatus.textContent = '✅ Заказ успешно оформлен! Мы свяжемся с вами в ближайшее время.';
+  orderStatus.style.color = '#10b981';
+
+  orderForm.reset();
+  setTimeout(() => {
+    orderModal.classList.add('hidden');
+    currentProduct = null;
+  }, 2000);
 };
-
-function esc(s) {
-  return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
 
 render();
