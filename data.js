@@ -31,8 +31,8 @@ const SITE_DATA = {
     { name: "Колонка Boom 3", price: "9 890 ₽", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3w5c_Qg00zyLUiDCxWnQePEVgH9CS0hbG2amJIVMU1g&s=10", description: "40 Вт, IPX7, 24 часа работы." }
   ],
   footer: {
-    address: "г. Москва, ул. Электронная, д. 15, офис 302",
-    phone: "+7 (495) 123-45-67",
+    address: "г. Москва, ул. Сикссевенская, д. 67, офис 6767",
+    phone: "+7 983 123-45-67",
     email: "info@electrotech.ru",
     copyright: "© 2025 ЭлектронТех. Все права защищены."
   }
